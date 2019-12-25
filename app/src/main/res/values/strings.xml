@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tamboon</string>
+    <string name="title_activity_charity_donation">CharityDonationActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>
