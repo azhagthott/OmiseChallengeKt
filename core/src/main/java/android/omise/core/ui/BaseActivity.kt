@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<BINDER : ViewDataBinding> : AppCompatActivity() {
 
-    var binder: BINDER? = null
+    lateinit var binder: BINDER
 
     @LayoutRes
     abstract fun getLayoutId(): Int

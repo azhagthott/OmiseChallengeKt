@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="dev.fb.android.tamboon">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,24 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="dev.fb.android.tamboon.ui.activity.CheckoutActivity"
-            android:label="@string/title_activity_charity_donation"
-            android:parentActivityName="dev.fb.android.tamboon.ui.activity.CharityListActivity"
+            android:name="dev.fb.android.tamboon.ui.activity.CharityListActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="dev.fb.android.tamboon.ui.activity.CharityListActivity" />
-        </activity>
-
-        <activity android:name="dev.fb.android.tamboon.ui.activity.CharityListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="dev.fb.android.tamboon.ui.activity.CheckoutActivity"
+            android:label="@string/title_activity_charity_donation"
+            android:launchMode="singleInstance"
+            android:parentActivityName="dev.fb.android.tamboon.ui.activity.CharityListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dev.fb.android.tamboon.ui.activity.CharityListActivity" />
         </activity>
 
         <activity

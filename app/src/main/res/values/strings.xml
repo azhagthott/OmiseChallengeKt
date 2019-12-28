@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Tamboon</string>
-    <string name="title_activity_charity_donation">CharityDonationActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_charity_donation">Donation</string>
+    <string name="title_activity_charity_list">Tamboon - Charities</string>
     <string name="checkout_btn_text_donate">Donate</string>
+    <string name="hint_donation_amount">Donation amount</string>
 </resources>

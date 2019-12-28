@@ -6,5 +6,5 @@ import com.google.gson.JsonObject
 
 interface CharityRepository {
     suspend fun getCharityList(): BaseUseCase<List<Charity>>
-    suspend fun makeCheckout(): BaseUseCase<JsonObject>
+    suspend fun makeCheckout(json: JsonObject): BaseUseCase<JsonObject>
 }

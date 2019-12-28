@@ -3,9 +3,15 @@ package dev.fb.android.tamboon.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.omise.charity.domain.model.Charity
+import android.omise.charity.domain.model.Donation
 import android.omise.core.ui.BaseActivity
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import co.omise.android.api.Client
 import co.omise.android.api.RequestListener
 import co.omise.android.models.Capability
@@ -17,14 +23,20 @@ import com.bumptech.glide.Glide
 import dev.fb.android.tamboon.BuildConfig
 import dev.fb.android.tamboon.R
 import dev.fb.android.tamboon.databinding.ActivityCheckoutBinding
+import dev.fb.android.tamboon.viewmodel.CheckoutActivityViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
+
+    private val viewModel: CheckoutActivityViewModel by viewModel()
 
     private val TAG = CheckoutActivity::class.java.canonicalName
     private val client = Client(BuildConfig.OMISE_PKEY)
     private val REQUEST_CC: Int = 1001
 
     private lateinit var capability: Capability
+    private lateinit var donation: Donation
+    private var amount = 0
 
     val request = Capability.GetCapabilitiesRequestBuilder().build()
 
@@ -47,17 +59,9 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
 
     override fun initView() {
 
-        val name = intent.extras!!.getString(CHARITY_NAME)
-        val url = intent.extras!!.getString(CHARITY_URL)
+        setUpUI()
 
-        binder?.tvCharityName?.text = name
-        Glide.with(this)
-            .load(url)
-            .into(binder?.ivCharityLogo!!)
-
-        binder!!.btnDonateNow.setOnClickListener {
-            showPaymentCreatorActivity()
-        }
+        binder.btnDonateNow.setOnClickListener { showPaymentCreatorActivity() }
 
         client.send(request, object : RequestListener<Capability> {
             override fun onRequestSucceed(model: Capability) {
@@ -71,12 +75,28 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
     }
 
     override fun initViewModel() {
+
+        viewModel.checkoutSuccess.observe(this, Observer {
+            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed(Runnable {
+                startActivity(Intent(this, CharityListActivity::class.java))
+                finish()
+            }, 1000)
+        })
+
+        viewModel.showError.observe(this, Observer { showError ->
+            Log.e(TAG, "showError: " + showError)
+        })
+
+        viewModel.showLoading.observe(this, Observer { showLoading ->
+            binder.progressCircular.visibility = if (showLoading!!) View.VISIBLE else View.GONE
+        })
     }
 
     private fun showPaymentCreatorActivity() {
         val intent = Intent(this@CheckoutActivity, PaymentCreatorActivity::class.java)
         intent.putExtra(OmiseActivity.EXTRA_PKEY, BuildConfig.OMISE_PKEY)
-        intent.putExtra(OmiseActivity.EXTRA_AMOUNT, 150000L)
+        intent.putExtra(OmiseActivity.EXTRA_AMOUNT, amount)
         intent.putExtra(OmiseActivity.EXTRA_CURRENCY, "thb")
         intent.putExtra(OmiseActivity.EXTRA_CAPABILITY, capability)
         startActivityForResult(intent, REQUEST_CC)
@@ -91,7 +111,42 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
 
         if (requestCode == REQUEST_CC) {
             val token = data?.getParcelableExtra<Token>(EXTRA_TOKEN_OBJECT)
-            Toast.makeText(this, "totken: " + token, Toast.LENGTH_SHORT).show()
+            Log.e(TAG, "token: " + token)
+            initViewModel()
+
+            val donationToken = token!!.id.toString()
+            val donationName = token.card!!.name.toString()
+
+            donation = Donation(
+                donationName,
+                donationToken,
+                amount
+            )
+
+            viewModel.makeCheckout(donation)
         }
+    }
+
+    private fun setUpUI() {
+        val name = intent.extras!!.getString(CHARITY_NAME)
+        val url = intent.extras!!.getString(CHARITY_URL)
+
+        binder.tvCharityName.text = name
+        Glide.with(this)
+            .load(url)
+            .into(binder.ivCharityLogo)
+
+        binder.etAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binder.btnDonateNow.isEnabled = c!!.length > 1
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                amount = Integer.parseInt(s.toString())
+            }
+        })
     }
 }

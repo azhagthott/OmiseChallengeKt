@@ -24,8 +24,8 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
     override fun initView() {
         initViewModel()
         adapter = CharityListAdapter(this)
-        binder?.lvCharities?.adapter = adapter
-        binder?.lvCharities?.setOnItemClickListener { _, _, postion, _ ->
+        binder.lvCharities.adapter = adapter
+        binder.lvCharities.setOnItemClickListener { _, _, postion, _ ->
             run {
                 val charityItemId = list[postion]
                 val intent = CheckoutActivity.newIntent(this, charityItemId)
@@ -41,7 +41,7 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
         })
 
         viewModel.showLoading.observe(this, Observer { showLoading ->
-            binder?.progressCircular?.visibility = if (showLoading!!) View.VISIBLE else View.GONE
+            binder.progressCircular.visibility = if (showLoading!!) View.VISIBLE else View.GONE
         })
 
         viewModel.showError.observe(this, Observer { showError ->

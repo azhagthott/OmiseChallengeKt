@@ -1,4 +1,4 @@
-package dev.fb.android.tamboon.viewmodel
+package android.omise.core.ui
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope

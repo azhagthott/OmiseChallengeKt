@@ -6,6 +6,7 @@ import android.omise.charity.data.repository.CharityRepositoryImp
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dev.fb.android.tamboon.BuildConfig
+import dev.fb.android.tamboon.viewmodel.CheckoutActivityViewModel
 import dev.fb.android.tamboon.viewmodel.MainActivityViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,17 +26,16 @@ val appModule = module {
             baseUrl = BuildConfig.URL_BASE
         )
     }
-    // Tells Koin how to create an instance of CatRepository
+
     factory<CharityRepository> { CharityRepositoryImp(api = get()) }
-    // Specific viewModel pattern to tell Koin how to build MainViewModel
+
     viewModel { MainActivityViewModel(repository = get()) }
+    viewModel { CheckoutActivityViewModel(repository = get()) }
 }
 
 fun createHttpClient(): OkHttpClient {
 
     val interceptor = HttpLoggingInterceptor()
-
-    interceptor.level = HttpLoggingInterceptor.Level.HEADERS
     interceptor.level = HttpLoggingInterceptor.Level.BODY
 
     val client = OkHttpClient.Builder()
