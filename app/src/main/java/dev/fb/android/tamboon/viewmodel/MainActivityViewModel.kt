@@ -1,9 +1,9 @@
 package dev.fb.android.tamboon.viewmodel
 
+import android.omise.charity.data.repository.CharityRepository
+import android.omise.charity.domain.model.Charity
+import android.omise.core.ui.BaseUseCase
 import androidx.lifecycle.MutableLiveData
-import dev.fb.android.tamboon.base.BaseUseCase
-import dev.fb.android.tamboon.data.repository.CharityRepository
-import dev.fb.android.tamboon.domain.model.Charity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,7 +18,7 @@ class MainActivityViewModel(private val repository: CharityRepository) : BaseVie
         loadCharities()
     }
 
-    private fun loadCharities() {
+    fun loadCharities() {
         showLoading.value = true
 
         launch {

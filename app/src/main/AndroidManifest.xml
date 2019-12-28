@@ -3,28 +3,28 @@
     package="dev.fb.android.tamboon">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 
     <application
+        android:name=".TamboonApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ui.charity.activity.CheckoutActivity"
+            android:name="dev.fb.android.tamboon.ui.activity.CheckoutActivity"
             android:label="@string/title_activity_charity_donation"
-            android:parentActivityName=".ui.charity.activity.CharityListActivity"
+            android:parentActivityName="dev.fb.android.tamboon.ui.activity.CharityListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="dev.fb.android.tamboon.ui.charity.activity.CharityListActivity" />
+                android:value="dev.fb.android.tamboon.ui.activity.CharityListActivity" />
         </activity>
 
-        <activity android:name=".ui.charity.activity.CharityListActivity">
+        <activity android:name="dev.fb.android.tamboon.ui.activity.CharityListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="android.omise.charity"/>
+    package="android.omise.charity" />

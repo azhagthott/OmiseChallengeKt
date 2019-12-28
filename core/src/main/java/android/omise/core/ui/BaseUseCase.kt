@@ -1,4 +1,4 @@
-package dev.fb.android.tamboon.base
+package android.omise.core.ui
 
 sealed class BaseUseCase<out T : Any> {
 

@@ -1,6 +1,6 @@
-package dev.fb.android.tamboon.data.remote
+package android.omise.charity.data.remote
 
-import dev.fb.android.tamboon.domain.model.Charity
+import android.omise.charity.domain.model.Charity
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 

@@ -1,7 +1,7 @@
-package dev.fb.android.tamboon.ui.charity.activity
+package dev.fb.android.tamboon.ui.activity
 
+import android.omise.core.ui.BaseActivity
 import dev.fb.android.tamboon.R
-import dev.fb.android.tamboon.base.BaseActivity
 import dev.fb.android.tamboon.databinding.ActivityCheckoutBinding
 
 class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
@@ -11,10 +11,8 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
     }
 
     override fun initView() {
-
     }
 
-    override fun injectDependency() {
-
+    override fun initViewModel() {
     }
 }

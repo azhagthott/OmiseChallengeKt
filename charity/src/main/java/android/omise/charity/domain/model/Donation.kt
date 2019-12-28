@@ -1,4 +1,4 @@
-package dev.fb.android.tamboon.domain.model
+package android.omise.charity.domain.model
 
 import com.google.gson.annotations.SerializedName
 

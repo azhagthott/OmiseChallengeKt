@@ -1,9 +1,9 @@
-package dev.fb.android.tamboon.data.repository
+package android.omise.charity.data.repository
 
-import com.google.gson.JsonObject
+import android.omise.charity.data.remote.CharityApi
+import android.omise.charity.domain.model.Charity
 import android.omise.core.ui.BaseUseCase
-import dev.fb.android.tamboon.data.remote.CharityApi
-import dev.fb.android.tamboon.domain.model.Charity
+import com.google.gson.JsonObject
 
 class CharityRepositoryImp(private val api: CharityApi) : CharityRepository {
     override suspend fun getCharityList(): BaseUseCase<List<Charity>> {

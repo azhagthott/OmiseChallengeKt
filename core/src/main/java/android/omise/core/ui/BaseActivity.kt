@@ -1,4 +1,4 @@
-package dev.fb.android.tamboon.base
+package android.omise.core.ui
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
@@ -15,12 +15,12 @@ abstract class BaseActivity<BINDER : ViewDataBinding> : AppCompatActivity() {
 
     protected abstract fun initView()
 
-    protected abstract fun injectDependency()
+    protected abstract fun initViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder = DataBindingUtil.setContentView(this, getLayoutId())
         initView()
-        injectDependency()
+        initViewModel()
     }
 }

@@ -1,4 +1,4 @@
-package dev.fb.android.tamboon.data.remote
+package android.omise.charity.data.remote
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
