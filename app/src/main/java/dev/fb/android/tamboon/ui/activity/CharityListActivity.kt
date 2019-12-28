@@ -1,5 +1,6 @@
 package dev.fb.android.tamboon.ui.activity
 
+import android.omise.charity.domain.model.Charity
 import android.omise.core.ui.BaseActivity
 import android.view.View
 import android.widget.Toast
@@ -14,6 +15,7 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
 
     private val viewModel: MainActivityViewModel by viewModel()
     private lateinit var adapter: CharityListAdapter
+    private lateinit var list: List<Charity>
 
     override fun getLayoutId(): Int {
         return R.layout.activity_charity_list
@@ -23,10 +25,18 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
         initViewModel()
         adapter = CharityListAdapter(this)
         binder?.lvCharities?.adapter = adapter
+        binder?.lvCharities?.setOnItemClickListener { _, _, postion, _ ->
+            run {
+                val charityItemId = list[postion]
+                val intent = CheckoutActivity.newIntent(this, charityItemId)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun initViewModel() {
         viewModel.charityList.observe(this, Observer { newCharityList ->
+            this.list = newCharityList
             adapter.updateData(newCharityList)
         })
 

@@ -28,7 +28,47 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context=".ui.activity.CharityListActivity">
 
+            <TextView
+                android:id="@+id/tv_charity_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_charity_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_charity_logo"
+                app:layout_constraintTop_toTopOf="@+id/iv_charity_logo" />
 
+            <ImageView
+                android:id="@+id/iv_charity_logo"
+                android:layout_width="92dp"
+                android:layout_height="92dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <co.omise.android.ui.OmiseEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_charity_logo" />
+
+            <Button
+                android:id="@+id/btn_donate_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="64dp"
+                android:text="@string/checkout_btn_text_donate"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
