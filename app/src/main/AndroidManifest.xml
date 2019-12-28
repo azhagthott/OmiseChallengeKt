@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.charity.activity.CharityDonationActivity"
+            android:name=".ui.charity.activity.CheckoutActivity"
             android:label="@string/title_activity_charity_donation"
             android:parentActivityName=".ui.charity.activity.CharityListActivity"
             android:theme="@style/AppTheme">

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+
+        <!--
+
+        Allow the app fetch http content android:usesCleartextTraffic="true"
+        or allow the app
+        <domain includeSubdomains="true">www.adamandlianne.com</domain>
+        <domain includeSubdomains="true">www.makhampom.net</domain>
+        <domain includeSubdomains="true">rkdretailiq.com</domain>
+        -->
+
+    </domain-config>
+</network-security-config>

@@ -1,20 +1,33 @@
 package dev.fb.android.tamboon.viewmodel
 
-import androidx.lifecycle.ViewModel
-import dev.fb.android.tamboon.base.UseCaseObserver
+import androidx.lifecycle.MutableLiveData
+import dev.fb.android.tamboon.base.BaseUseCase
+import dev.fb.android.tamboon.data.repository.CharityRepository
 import dev.fb.android.tamboon.domain.model.Charity
-import dev.fb.android.tamboon.domain.usecase.CharityListUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MainActivityViewModel : ViewModel() {
+class MainActivityViewModel(private val repository: CharityRepository) : BaseViewModel() {
 
-    private val charityListUseCase: CharityListUseCase? = null
+    val showLoading = MutableLiveData<Boolean>()
+    val charityList = MutableLiveData<List<Charity>>()
+    val showError = MutableLiveData<String>()
 
-    private val list = listOf<Charity>()
+    init {
+        loadCharities()
+    }
 
-    fun getCharityList(): List<Charity> {
+    private fun loadCharities() {
+        showLoading.value = true
 
-        charityListUseCase?.execue(UseCaseObserver())
-
-        return list
+        launch {
+            val result = withContext(Dispatchers.IO) { repository.getCharityList() }
+            showLoading.value = false
+            when (result) {
+                is BaseUseCase.Success -> charityList.value = result.data
+                is BaseUseCase.Error -> showError.value = result.exception.message
+            }
+        }
     }
 }
