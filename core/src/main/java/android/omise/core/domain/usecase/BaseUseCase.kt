@@ -1,4 +1,4 @@
-package android.omise.core.ui
+package android.omise.core.domain.usecase
 
 sealed class BaseUseCase<out T : Any> {
 

@@ -2,7 +2,7 @@ package android.omise.charity.data.repository
 
 import android.omise.charity.data.remote.CharityApi
 import android.omise.charity.domain.model.Charity
-import android.omise.core.ui.BaseUseCase
+import android.omise.core.domain.usecase.BaseUseCase
 import com.google.gson.JsonObject
 
 class CharityRepositoryImp(private val api: CharityApi) : CharityRepository {

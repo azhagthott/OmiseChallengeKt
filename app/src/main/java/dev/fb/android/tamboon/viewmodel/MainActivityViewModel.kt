@@ -2,8 +2,8 @@ package dev.fb.android.tamboon.viewmodel
 
 import android.omise.charity.data.repository.CharityRepository
 import android.omise.charity.domain.model.Charity
-import android.omise.core.ui.BaseUseCase
-import android.omise.core.ui.BaseViewModel
+import android.omise.core.domain.usecase.BaseUseCase
+import android.omise.core.ui.viewmodel.BaseViewModel
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

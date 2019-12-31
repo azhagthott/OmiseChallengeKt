@@ -1,4 +1,4 @@
-package android.omise.core.ui
+package android.omise.core.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope

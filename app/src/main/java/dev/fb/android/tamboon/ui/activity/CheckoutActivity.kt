@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.omise.charity.domain.model.Charity
 import android.omise.charity.domain.model.Donation
-import android.omise.core.ui.BaseActivity
+import android.omise.core.ui.activity.BaseActivity
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher

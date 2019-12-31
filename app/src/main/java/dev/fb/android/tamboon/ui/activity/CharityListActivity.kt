@@ -1,9 +1,9 @@
 package dev.fb.android.tamboon.ui.activity
 
 import android.omise.charity.domain.model.Charity
-import android.omise.core.ui.BaseActivity
+import android.omise.core.ui.activity.BaseActivity
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import dev.fb.android.tamboon.R
 import dev.fb.android.tamboon.databinding.ActivityCharityListBinding
@@ -12,6 +12,8 @@ import dev.fb.android.tamboon.viewmodel.MainActivityViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
+
+    private val TAG: String? = CharityListActivity::class.java.canonicalName
 
     private val viewModel: MainActivityViewModel by viewModel()
     private lateinit var adapter: CharityListAdapter
@@ -45,7 +47,9 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
         })
 
         viewModel.showError.observe(this, Observer { showError ->
-            Toast.makeText(this, showError, Toast.LENGTH_SHORT).show()
+            Log.e(TAG, "Error: " + showError)
+            binder.tvError.visibility = View.VISIBLE
+            binder.lvCharities.visibility = View.GONE
         })
     }
 }

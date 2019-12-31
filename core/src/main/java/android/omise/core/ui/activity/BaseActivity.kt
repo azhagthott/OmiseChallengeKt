@@ -1,4 +1,4 @@
-package android.omise.core.ui
+package android.omise.core.ui.activity
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes

@@ -4,4 +4,5 @@
     <string name="title_activity_charity_list">Tamboon - Charities</string>
     <string name="checkout_btn_text_donate">Donate</string>
     <string name="hint_donation_amount">Donation amount</string>
+    <string name="check_connection">Check your Internet connection</string>
 </resources>
