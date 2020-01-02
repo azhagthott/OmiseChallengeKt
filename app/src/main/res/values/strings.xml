@@ -5,4 +5,9 @@
     <string name="checkout_btn_text_donate">Donate</string>
     <string name="hint_donation_amount">Donation amount</string>
     <string name="check_connection">Check your Internet connection</string>
+
+    <string name="checkout_success">Success</string>
+    <string name="donation_canceled">Donation canceled</string>
+    <string name="exceed_maximum">Exceed maximum</string>
+
 </resources>

@@ -6,5 +6,5 @@ data class Donation(
 
     @SerializedName("name") var donationName: String,
     @SerializedName("token") var donationToken: String,
-    @SerializedName("amount") var donationAmount: Int
+    @SerializedName("amount") var donationAmount: Long
 )

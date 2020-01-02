@@ -30,7 +30,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0'
 
     //Gson Converter
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'

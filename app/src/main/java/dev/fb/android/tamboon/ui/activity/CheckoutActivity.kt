@@ -26,7 +26,7 @@ import dev.fb.android.tamboon.databinding.ActivityCheckoutBinding
 import dev.fb.android.tamboon.viewmodel.CheckoutActivityViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
+class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), TextWatcher {
 
     private val viewModel: CheckoutActivityViewModel by viewModel()
 
@@ -36,7 +36,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
 
     private lateinit var capability: Capability
     private lateinit var donation: Donation
-    private var amount = 0
+    private var amount = 0L
 
     val request = Capability.GetCapabilitiesRequestBuilder().build()
 
@@ -59,26 +59,18 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
 
     override fun initView() {
 
+        requestCapability()
+
         setUpUI()
 
         binder.btnDonateNow.setOnClickListener { showPaymentCreatorActivity() }
-
-        client.send(request, object : RequestListener<Capability> {
-            override fun onRequestSucceed(model: Capability) {
-                capability = model
-            }
-
-            override fun onRequestFailed(throwable: Throwable) {
-                Log.e(TAG, "Throwable: " + throwable.message)
-            }
-        })
     }
 
     override fun initViewModel() {
 
         viewModel.checkoutSuccess.observe(this, Observer {
-            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-            Handler().postDelayed(Runnable {
+            Toast.makeText(this, R.string.checkout_success, Toast.LENGTH_SHORT).show()
+            Handler().postDelayed({
                 startActivity(Intent(this, CharityListActivity::class.java))
                 finish()
             }, 1000)
@@ -105,13 +97,16 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.donation_canceled, Toast.LENGTH_SHORT).show()
             return
         }
 
         if (requestCode == REQUEST_CC) {
+
+            binder.btnDonateNow.isEnabled = false
+
             val token = data?.getParcelableExtra<Token>(EXTRA_TOKEN_OBJECT)
-            Log.e(TAG, "token: " + token)
+            Log.i(TAG, "token: " + token)
             initViewModel()
 
             val donationToken = token!!.id.toString()
@@ -122,31 +117,55 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>() {
                 donationToken,
                 amount
             )
-
             viewModel.makeCheckout(donation)
         }
     }
 
     private fun setUpUI() {
-        val name = intent.extras!!.getString(CHARITY_NAME)
-        val url = intent.extras!!.getString(CHARITY_URL)
+        try {
 
-        binder.tvCharityName.text = name
-        Glide.with(this)
-            .load(url)
-            .into(binder.ivCharityLogo)
+            val name = intent.extras!!.getString(CHARITY_NAME)
+            val url = intent.extras!!.getString(CHARITY_URL)
 
-        binder.etAmount.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            binder.tvCharityName.text = name
+            Glide.with(this).load(url).into(binder.ivCharityLogo)
+
+            binder.etAmount.addTextChangedListener(this)
+
+        } catch (ex: Exception) {
+            Log.e(TAG, "Exception: " + ex.message)
+        }
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+    }
+
+    override fun beforeTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        if (c.toString().isNotEmpty()) {
+            binder.btnDonateNow.isEnabled = c.toString().toLong() in 20..1000000
+
+            if (c.toString().toLong() > 100000) {
+                binder.btnDonateNow.isEnabled = false
+                Toast.makeText(this, R.string.exceed_maximum, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            binder.btnDonateNow.isEnabled = false
+        }
+    }
+
+    private fun requestCapability() {
+        client.send(request, object : RequestListener<Capability> {
+            override fun onRequestSucceed(model: Capability) {
+                capability = model
             }
 
-            override fun onTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binder.btnDonateNow.isEnabled = c!!.length > 1
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                amount = Integer.parseInt(s.toString())
+            override fun onRequestFailed(throwable: Throwable) {
+                Log.e(TAG, "Throwable: " + throwable.message)
             }
         })
+
     }
 }

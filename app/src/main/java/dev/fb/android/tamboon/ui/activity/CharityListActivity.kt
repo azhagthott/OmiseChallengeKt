@@ -37,13 +37,15 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
     }
 
     override fun initViewModel() {
+        isLoading(true)
+
         viewModel.charityList.observe(this, Observer { newCharityList ->
             this.list = newCharityList
             adapter.updateData(newCharityList)
         })
 
         viewModel.showLoading.observe(this, Observer { showLoading ->
-            binder.progressCircular.visibility = if (showLoading!!) View.VISIBLE else View.GONE
+            isLoading(showLoading)
         })
 
         viewModel.showError.observe(this, Observer { showError ->
@@ -51,5 +53,9 @@ class CharityListActivity : BaseActivity<ActivityCharityListBinding>() {
             binder.tvError.visibility = View.VISIBLE
             binder.lvCharities.visibility = View.GONE
         })
+    }
+
+    private fun isLoading(loading: Boolean) {
+        binder.progressCircular.visibility = if (loading) View.VISIBLE else View.GONE
     }
 }
