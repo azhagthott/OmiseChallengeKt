@@ -36,7 +36,7 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), TextWatcher {
 
     private lateinit var capability: Capability
     private lateinit var donation: Donation
-    private var amount = 0L
+    private var amount = 0
 
     val request = Capability.GetCapabilitiesRequestBuilder().build()
 
@@ -58,6 +58,9 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), TextWatcher {
     }
 
     override fun initView() {
+
+        setSupportActionBar(binder.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         requestCapability()
 
@@ -146,10 +149,11 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding>(), TextWatcher {
     override fun onTextChanged(c: CharSequence?, p1: Int, p2: Int, p3: Int) {
         if (c.toString().isNotEmpty()) {
             binder.btnDonateNow.isEnabled = c.toString().toLong() in 20..1000000
-
             if (c.toString().toLong() > 100000) {
                 binder.btnDonateNow.isEnabled = false
                 Toast.makeText(this, R.string.exceed_maximum, Toast.LENGTH_SHORT).show()
+            } else {
+                amount = binder.etAmount.text.toString().toInt()
             }
         } else {
             binder.btnDonateNow.isEnabled = false
